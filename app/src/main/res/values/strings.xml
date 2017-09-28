@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PopularMov</string>
+    <string name="toolbar_title">PopMovies</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_mostPopular">Most Popular</string>
+    <string name="action_topRated">Top Rated</string>
+    <string name ="action_movies_loading">Loading</string>
+    <string name="text_movie_title">Title</string>
+    <string name="text_movie_release_date">ReleaseDate</string>
+    <string name="text_movie_vote_average">VoteAverage</string>
+    <string name="text_movie_movieOverView">OverView</string>
+    <string name="toast_pop_movies_clicked">Awesome you clicked on the most popular movies</string>
+    <string name="toast_top_rated_movies_clicked">Awesome you clicked on the Top rated movies</string>
+
+</resources>
