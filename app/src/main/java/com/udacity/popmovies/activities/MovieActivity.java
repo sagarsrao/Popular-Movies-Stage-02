@@ -1,23 +1,21 @@
 package com.udacity.popmovies.activities;
 
-import android.app.ProgressDialog;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.udacity.popmovies.R;
 import com.udacity.popmovies.adapters.MovieAdapter;
+import com.udacity.popmovies.adapters.OnItemClickListener;
 import com.udacity.popmovies.constants.MovieConstants;
 import com.udacity.popmovies.models.Movie;
-import com.udacity.popmovies.networking.JSONReader;
+import com.udacity.popmovies.networking.AsyncTaskListener;
+import com.udacity.popmovies.networking.FetchMyMoviesTask;
 
 
 import java.util.ArrayList;
@@ -37,6 +35,8 @@ public class MovieActivity extends AppCompatActivity {
     RecyclerView.LayoutManager mLayoutManager;
 
     List<Movie> movie;
+
+    OnItemClickListener clickListener;
 
 
     @Override
@@ -68,60 +68,48 @@ public class MovieActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_most_popular) {
             Toast.makeText(this, getString(R.string.toast_pop_movies_clicked), Toast.LENGTH_SHORT).show();
-            new PopMovies().execute(MovieConstants.MOST_POPULAR_MOVIES_URL);//An Async task operation
+            new FetchMyMoviesTask(this, new FetchMyTaskListener()).execute(MovieConstants.MOST_POPULAR_MOVIES_URL);
             return true;
         }
 
         if (id == R.id.action_top_rated) {
             Toast.makeText(this, getString(R.string.toast_top_rated_movies_clicked), Toast.LENGTH_SHORT).show();
-            new PopMovies().execute(MovieConstants.MOST_TOP_RATED_MOVIES_URL);//An Async task operation
-
+            new FetchMyMoviesTask(this, new FetchMyTaskListener()).execute(MovieConstants.MOST_TOP_RATED_MOVIES_URL);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private class PopMovies extends AsyncTask<String, String, List<Movie>> {
 
-        ProgressDialog mDialog;
-
+    /*This below inner class can be used for showing the result on a UI us*/
+    public class FetchMyTaskListener implements AsyncTaskListener<List<Movie>> {
 
         @Override
-        protected void onPreExecute() {
-            mDialog = new ProgressDialog(MovieActivity.this);
-            mDialog.setMessage(getString(R.string.action_movies_loading));
-            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mDialog.setIndeterminate(true);
-            mDialog.show();
+        public void onTaskFinished(List<Movie> result) {
+
+            /*We will take the list and implement it on the UI using recyclerView*/
+            if (null != result) {
+                mAdapter = new MovieAdapter(MovieActivity.this, result, clickListener);
+                mLayoutManager = new GridLayoutManager(MovieActivity.this, 2);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setAdapter(mAdapter);
+
+            } else {
+
+                Toast.makeText(MovieActivity.this, getString(R.string.toast_results_load_failure), Toast.LENGTH_SHORT).show();
+
+            }
 
         }
 
-        @Override
-        protected List<Movie> doInBackground(String... params) {
-            mDialog.dismiss();
-            JSONReader jsonReader = new JSONReader();
-            movie = jsonReader.getdatafromurl(params[0]);
 
-            return movie;
-
-        }
-
-        @Override
-        protected void onPostExecute(List<Movie> movies) {
-            super.onPostExecute(movies);
-            mAdapter = new MovieAdapter(MovieActivity.this, movies);
-            mLayoutManager = new GridLayoutManager(MovieActivity.this, 2);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.setAdapter(mAdapter);
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        new PopMovies().execute(MovieConstants.MOST_POPULAR_MOVIES_URL);
+        new FetchMyMoviesTask(this, new FetchMyTaskListener()).execute(MovieConstants.MOST_POPULAR_MOVIES_URL);
 
 
     }

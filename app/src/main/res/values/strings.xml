@@ -11,5 +11,7 @@
     <string name="text_movie_movieOverView">OverView</string>
     <string name="toast_pop_movies_clicked">Awesome you clicked on the most popular movies</string>
     <string name="toast_top_rated_movies_clicked">Awesome you clicked on the Top rated movies</string>
-
+    <string name="toast_loading_the_data">Sorry!Loading Data Failure!!</string>
+    <string name="toast_results_load_failure">Sorry!There was a problem in loading the Data</string>
+    <string name="toast_no_internet_connection">Sorry!Internet Connection Not available or No Network!!!</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.udacity.popmovies.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +10,9 @@ import java.util.List;
  * Created by sagarsrao on 23-09-2017.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
 
-    /*private fields*/
+    /*Include parcelable data types*/
 
     private String title;
 
@@ -23,28 +26,38 @@ public class Movie {
 
     List<Movie> movieList = new ArrayList<Movie>();
 
-    /*Overloaded Constructors*/
-    public Movie(String title, String poster_path, String overview, String vote_average, String release_date, List<Movie> movieList) {
-        this.title = title;
-        this.poster_path = poster_path;
-        this.overview = overview;
-        this.vote_average = vote_average;
-        this.release_date = release_date;
-        this.movieList = movieList;
-    }
-
-    public Movie(String title, String poster_path, String overview, String vote_average, String release_date) {
-        this.title = title;
-        this.poster_path = poster_path;
-        this.overview = overview;
-        this.vote_average = vote_average;
-        this.release_date = release_date;
-    }
 
     public Movie() {
-
+        // Normal actions performed by class, since this is still a normal object!
     }
 
+    /*// Using the `in` variable, we can retrieve the values that
+    // we originally wrote into the `Parcel`.  This constructor is usually
+    // private so that only the `CREATOR` field can access.*/
+    private Movie(Parcel in) {
+        title = in.readString();
+        poster_path = in.readString();
+        overview = in.readString();
+        vote_average = in.readString();
+        release_date = in.readString();
+        movieList = in.createTypedArrayList(Movie.CREATOR);
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        // This simply calls our new constructor (typically private) and
+        // passes along the unmarshalled `Parcel`, and then returns the new object!
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        // We just need to copy this and change the type to match our class.
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     /*getters and setters*/
     public String getTitle() {
@@ -93,5 +106,22 @@ public class Movie {
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
+    }
+
+    // In the vast majority of cases you can simply return 0 for this.
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /*This is where you write the values you want to save to the `Parcel`.  */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(poster_path);
+        dest.writeString(overview);
+        dest.writeString(vote_average);
+        dest.writeString(release_date);
+        dest.writeTypedList(movieList);
     }
 }

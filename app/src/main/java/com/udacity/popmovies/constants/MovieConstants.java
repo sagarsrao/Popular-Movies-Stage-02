@@ -1,6 +1,8 @@
 package com.udacity.popmovies.constants;
 
 
+import com.udacity.popmovies.BuildConfig;
+
 /**
  * Created by sagarsrao on 22-09-2017.
  */
@@ -13,9 +15,8 @@ public class MovieConstants {
 
 
     public static final String MOVIE_IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
-    public static final String TMDB_API_KEY = "/*Put your api key here*/";
-    public static final String MOST_POPULAR_MOVIES_URL = "http://api.themoviedb.org/3/movie/popular?api_key=" + TMDB_API_KEY;
-    public static final String MOST_TOP_RATED_MOVIES_URL = "http://api.themoviedb.org/3/movie/top_rated?api_key=" + TMDB_API_KEY;
+    public static final String MOST_POPULAR_MOVIES_URL = "http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.API_KEY;
+    public static final String MOST_TOP_RATED_MOVIES_URL = "http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.API_KEY;
     public static final String MOVIE_TITLE = "movie_title";
     public static final String MOVIE_RELEASE_DATE = "movie_release_date";
     public static final String MOVIE_OVERVIEW = "movie_overView";

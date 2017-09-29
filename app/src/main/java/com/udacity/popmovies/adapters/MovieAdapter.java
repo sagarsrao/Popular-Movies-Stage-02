@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.udacity.popmovies.R;
@@ -25,11 +26,14 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
 
-    Context mContext;
+    static Context mContext;
 
-    public MovieAdapter(Context mContext, List<Movie> movieList) {
+    private final OnItemClickListener itemClickListener;
+
+    public MovieAdapter(Context mContext, List<Movie> movieList, OnItemClickListener itemClickListener) {
         this.mContext = mContext;
         this.movieList = movieList;
+        this.itemClickListener = itemClickListener;
     }
 
     List<Movie> movieList;
@@ -45,40 +49,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieAdapter.MovieViewHolder holder, int position) {
 
-        final Movie movie = movieList.get(position);
-            /*Lets set the popular movie in to the imageView*/
-        String posterPath = MovieConstants.MOVIE_IMAGE_URL + movie.getPoster_path();
-        /*The below line of code will help us the usage of understanding the glide*/
-        Glide.with(mContext)
-                .load(posterPath)
-                .into(holder.movie_ImageView);
 
-        holder.mTitle.setText(movie.getTitle());
-        holder.mReleaseDate.setText(movie.getRelease_date());
-        holder.mOverView.setText(movie.getOverview());
-        holder.mVoteAverage.setText(movie.getVote_average());
-
-        holder.movie_ImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(MovieConstants.MOVIE_TITLE, movie.getTitle());
-                bundle.putString(MovieConstants.MOVIE_RELEASE_DATE, movie.getRelease_date());
-                bundle.putString(MovieConstants.MOVIE_OVERVIEW, movie.getOverview());
-                bundle.putString(MovieConstants.MOVIE_VOTE_AVERAGE, movie.getVote_average());
-                bundle.putString(MovieConstants.MOVIE_POSTER_VIEWS, movie.getPoster_path());
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
-            }
-        });
-
+        holder.bind(movieList.get(position), itemClickListener);
 
     }
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        if (null != movieList) {
+            return movieList.size();
+        } else
+            return 0;
+
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -99,6 +81,43 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             mReleaseDate = (TextView) itemView.findViewById(R.id.tv_release_date);
             mTopRatedOrPopularNameHolder = (TextView) itemView.findViewById(R.id.tv_pop_or_top_rated_holder);
 
+        }
+
+
+        public void bind(final Movie movie, final OnItemClickListener itemClickListener) {
+            if(null!=movie) {
+                String posterPath = MovieConstants.MOVIE_IMAGE_URL + movie.getPoster_path();
+                Glide.with(mContext)
+                        .load(posterPath)
+                        .into(movie_ImageView);
+
+                mTitle.setText(movie.getTitle());
+                mReleaseDate.setText(movie.getRelease_date());
+                mOverView.setText(movie.getOverview());
+                mVoteAverage.setText(movie.getVote_average());
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(MovieConstants.MOVIE_TITLE, movie.getTitle());
+                        bundle.putString(MovieConstants.MOVIE_RELEASE_DATE, movie.getRelease_date());
+                        bundle.putString(MovieConstants.MOVIE_OVERVIEW, movie.getOverview());
+                        bundle.putString(MovieConstants.MOVIE_VOTE_AVERAGE, movie.getVote_average());
+                        bundle.putString(MovieConstants.MOVIE_POSTER_VIEWS, movie.getPoster_path());
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+
+
+
+
+                    }
+                });
+            } else{
+
+                Toast.makeText(mContext, "Oops!There is problem in navigating the screen!!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
