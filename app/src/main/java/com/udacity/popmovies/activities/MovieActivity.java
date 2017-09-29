@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -91,7 +92,7 @@ public class MovieActivity extends AppCompatActivity {
             /*We will take the list and implement it on the UI using recyclerView*/
             if (null != result) {
                 mAdapter = new MovieAdapter(MovieActivity.this, result, clickListener);
-                mLayoutManager = new GridLayoutManager(MovieActivity.this, 2);
+                mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
 
@@ -101,6 +102,17 @@ public class MovieActivity extends AppCompatActivity {
 
             }
 
+        }
+
+        private int numberOfColumns() {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            // You can change this divider to adjust the size of the poster
+            int widthDivider = 500;
+            int width = displayMetrics.widthPixels;
+            int nColumns = width / widthDivider;
+            if (nColumns < 2) return 2;
+            return nColumns;
         }
 
 

@@ -62,7 +62,9 @@ public class FetchMyMoviesTask extends AsyncTask<String, String, List<Movie>> {
 
     @Override
     protected List<Movie> doInBackground(String... params) {
-        mDialog.dismiss();
+        if(mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
         JSONReader jsonReader = new JSONReader();
         movieList = jsonReader.getdatafromurl(params[0]);
         return movieList;

@@ -74,7 +74,7 @@
             android:layout_marginTop="14dp"
             android:text="@string/text_movie_title"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_view_text_size"
             android:textStyle="italic" />
 
         <TextView
@@ -87,7 +87,7 @@
             android:layout_marginTop="30dp"
             android:text="@string/text_movie_release_date"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_view_text_size"
             android:textStyle="italic" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:layout_alignStart="@+id/tv_movie_VoteAverage"
             android:text="@string/text_movie_vote_average"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_view_text_size"
             android:textStyle="italic" />
 
         <TextView
@@ -111,7 +111,7 @@
             android:layout_below="@+id/iv_selected_movie_image"
             android:text="@string/text_movie_movieOverView"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_view_text_size"
             android:textStyle="italic" />
 
 
