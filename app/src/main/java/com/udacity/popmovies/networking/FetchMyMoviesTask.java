@@ -48,9 +48,8 @@ public class FetchMyMoviesTask extends AsyncTask<String, String, List<Movie>> {
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
 
-        boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
 
-        if (isConnected||isWiFi) {
+        if (isConnected) {
 
             showProgressDialogue();
         } else {
