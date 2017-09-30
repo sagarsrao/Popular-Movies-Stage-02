@@ -65,7 +65,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         String moviePosterPath = MovieConstants.MOVIE_IMAGE_URL + getIntent().getExtras().getString(MovieConstants.MOVIE_POSTER_VIEWS);
         Glide.with(MovieDetailsActivity.this)
                 .load(moviePosterPath)
-
+                .placeholder(R.drawable.iv_placeholder__moviedetails)
+                .error(R.drawable.iv_placeholder_error_moviedetails)
                 .into(mPosterImage);
 
         mTitle.setText(getIntent().getExtras().getString(MovieConstants.MOVIE_TITLE));
