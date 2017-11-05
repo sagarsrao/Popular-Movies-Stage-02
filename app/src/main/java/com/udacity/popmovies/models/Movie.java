@@ -3,6 +3,8 @@ package com.udacity.popmovies.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +16,25 @@ public class Movie implements Parcelable {
 
     /*Include parcelable data types*/
 
+    @SerializedName("id")
+    private String _id;
+
+    @SerializedName("title")
     private String title;
 
+    @SerializedName("poster_path")
     private String poster_path;
 
+    @SerializedName("overview")
     private String overview;
 
+
+    @SerializedName("vote_average")
     private String vote_average;
 
+    @SerializedName("release_date")
     private String release_date;
+
 
     List<Movie> movieList = new ArrayList<Movie>();
 
@@ -31,12 +43,22 @@ public class Movie implements Parcelable {
         // Normal actions performed by class, since this is still a normal object!
     }
 
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
     /*// Using the `in` variable, we can retrieve the values that
-    // we originally wrote into the `Parcel`.  This constructor is usually
-    // private so that only the `CREATOR` field can access.*/
+        // we originally wrote into the `Parcel`.  This constructor is usually
+        // private so that only the `CREATOR` field can access.*/
     private Movie(Parcel in) {
+        _id = in.readString();
         title = in.readString();
         poster_path = in.readString();
+
         overview = in.readString();
         vote_average = in.readString();
         release_date = in.readString();
@@ -117,6 +139,7 @@ public class Movie implements Parcelable {
     /*This is where you write the values you want to save to the `Parcel`.  */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
         dest.writeString(title);
         dest.writeString(poster_path);
         dest.writeString(overview);

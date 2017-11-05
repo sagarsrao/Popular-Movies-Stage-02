@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
@@ -21,7 +21,7 @@
 
         <ImageView
             android:id="@+id/iv_selected_movie_image"
-            android:layout_width="200dp"
+            android:layout_width="130dp"
             android:layout_height="200dp"
             android:layout_below="@+id/my_toolbar"
             android:scaleType="fitXY" />
@@ -34,9 +34,10 @@
             android:layout_below="@+id/my_toolbar"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="36dp"
             android:layout_toEndOf="@+id/iv_selected_movie_image"
-            android:layout_toRightOf="@+id/iv_selected_movie_image" />
+            android:layout_toRightOf="@+id/iv_selected_movie_image"
+            android:textSize="@dimen/text_view_text_size"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/tv_movie_ReleaseDate"
@@ -45,15 +46,19 @@
             android:layout_alignLeft="@+id/tv_movieTitle"
             android:layout_alignStart="@+id/tv_movieTitle"
             android:layout_below="@+id/tv_movieTitle"
-            android:layout_marginTop="70dp" />
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/text_view_text_size"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/tv_movie_VoteAverage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_selected_movie_image"
             android:layout_alignLeft="@+id/tv_movie_ReleaseDate"
-            android:layout_alignStart="@+id/tv_movie_ReleaseDate" />
+            android:layout_alignStart="@+id/tv_movie_ReleaseDate"
+            android:layout_marginTop="150dp"
+            android:textSize="@dimen/text_view_text_size"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/tv_movie_overView"
@@ -63,44 +68,6 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/iv_selected_movie_image"
             android:layout_marginTop="29dp" />
-
-        <TextView
-            android:id="@+id/tv_read_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_movieTitle"
-            android:layout_alignStart="@+id/tv_movieTitle"
-            android:layout_below="@+id/my_toolbar"
-            android:layout_marginTop="14dp"
-            android:text="@string/text_movie_title"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_view_text_size"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/tv_read_ReleaseDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_movie_ReleaseDate"
-            android:layout_alignStart="@+id/tv_movie_ReleaseDate"
-            android:layout_below="@+id/tv_movieTitle"
-            android:layout_marginTop="30dp"
-            android:text="@string/text_movie_release_date"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_view_text_size"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/tv_read_VoteAverage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tv_movie_VoteAverage"
-            android:layout_alignLeft="@+id/tv_movie_VoteAverage"
-            android:layout_alignStart="@+id/tv_movie_VoteAverage"
-            android:text="@string/text_movie_vote_average"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_view_text_size"
-            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/tv_read_movieOverView"
@@ -113,6 +80,39 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_view_text_size"
             android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/tv_trailerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_read_movieOverView"
+            android:layout_marginTop="120dp"
+            android:text="@string/text_movie_trailer"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_view_text_size"
+            android:textStyle="italic" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="450dp"
+            android:scrollbars="vertical">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ToggleButton
+            android:id="@+id/toggleMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_selected_movie_image"
+            android:layout_alignLeft="@+id/tv_movie_VoteAverage"
+            android:layout_alignStart="@+id/tv_movie_VoteAverage"
+            android:layout_marginBottom="11dp"
+            android:background="@color/colorPink" />
 
 
     </RelativeLayout>

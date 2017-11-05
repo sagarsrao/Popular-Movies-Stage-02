@@ -9,6 +9,7 @@
     <string name="text_movie_release_date">ReleaseDate</string>
     <string name="text_movie_vote_average">VoteAverage</string>
     <string name="text_movie_movieOverView">OverView</string>
+    <string name="text_movie_trailer">Trailers</string>
     <string name="toast_pop_movies_clicked">Awesome you clicked on the most popular movies</string>
     <string name="toast_top_rated_movies_clicked">Awesome you clicked on the Top rated movies</string>
     <string name="toast_loading_the_data">Sorry!Loading Data Failure!!</string>

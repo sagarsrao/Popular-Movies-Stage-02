@@ -28,10 +28,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     static Context mContext;
 
+
     private final OnItemClickListener itemClickListener;
 
     public MovieAdapter(Context mContext, List<Movie> movieList, OnItemClickListener itemClickListener) {
-        this.mContext = mContext;
+        MovieAdapter.mContext = mContext;
         this.movieList = movieList;
         this.itemClickListener = itemClickListener;
     }
@@ -64,8 +65,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
-
         ImageView movie_ImageView;
+        TextView m_id;
         TextView mTitle;
         TextView mOverView;
         TextView mVoteAverage;
@@ -75,6 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public MovieViewHolder(View itemView) {
             super(itemView);
             movie_ImageView = (ImageView) itemView.findViewById(R.id.iv_movie);
+            m_id = (TextView) itemView.findViewById(R.id.tv_id);
             mTitle = (TextView) itemView.findViewById(R.id.tv_title);
             mOverView = (TextView) itemView.findViewById(R.id.tv_overView);
             mVoteAverage = (TextView) itemView.findViewById(R.id.tv_vote_average);
@@ -85,12 +87,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
 
         public void bind(final Movie movie, final OnItemClickListener itemClickListener) {
-            if(null!=movie) {
+            if (null != movie) {
                 String posterPath = MovieConstants.MOVIE_IMAGE_URL + movie.getPoster_path();
                 Glide.with(mContext)
                         .load(posterPath)
                         .into(movie_ImageView);
-
+                m_id.setText(movie.get_id());
                 mTitle.setText(movie.getTitle());
                 mReleaseDate.setText(movie.getRelease_date());
                 mOverView.setText(movie.getOverview());
@@ -101,6 +103,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
                         Intent intent = new Intent(mContext, MovieDetailsActivity.class);
                         Bundle bundle = new Bundle();
+                        bundle.putString(MovieConstants.MOVIE_ID, movie.get_id());
                         bundle.putString(MovieConstants.MOVIE_TITLE, movie.getTitle());
                         bundle.putString(MovieConstants.MOVIE_RELEASE_DATE, movie.getRelease_date());
                         bundle.putString(MovieConstants.MOVIE_OVERVIEW, movie.getOverview());
@@ -110,11 +113,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                         mContext.startActivity(intent);
 
 
-
-
                     }
                 });
-            } else{
+            } else {
 
                 Toast.makeText(mContext, "Oops!There is problem in navigating the screen!!", Toast.LENGTH_SHORT).show();
             }
