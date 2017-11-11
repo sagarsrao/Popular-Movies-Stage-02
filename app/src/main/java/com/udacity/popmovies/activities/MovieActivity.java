@@ -100,7 +100,6 @@ public class MovieActivity extends AppCompatActivity {
                         mRecyclerView.setLayoutManager(mLayoutManager);
                         mAdapter = new MovieAdapter(MyApplication.getAppContext(), movies, clickListener);
                         mRecyclerView.setAdapter(mAdapter);
-
                         mAdapter.notifyDataSetChanged();
                     }
 
@@ -153,6 +152,13 @@ public class MovieActivity extends AppCompatActivity {
 
             return true;
         }
+        if (id == R.id.action_favorite) {
+            Toast.makeText(this, "You clicked on favorite option!!!!!!!!", Toast.LENGTH_SHORT).show();
+            /*Todo 1 : Query the content provider for the movie id */
+            /*Todo 2 : Pass the movie id to the Favorites adapter*/
+            /*Todo 3 : Show the GridView collection of images for the favorite images opted  by the user*/
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -37,7 +37,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.itemClickListener = itemClickListener;
     }
 
-    List<Movie> movieList;
+    private List<Movie> movieList;
 
 
     @Override
@@ -51,7 +51,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieAdapter.MovieViewHolder holder, int position) {
 
 
-        holder.bind(movieList.get(position), itemClickListener);
+        holder.bind(movieList.get(position), itemClickListener); //
 
     }
 

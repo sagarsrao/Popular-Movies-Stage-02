@@ -108,11 +108,21 @@
             android:id="@+id/toggleMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_selected_movie_image"
             android:layout_alignLeft="@+id/tv_movie_VoteAverage"
             android:layout_alignStart="@+id/tv_movie_VoteAverage"
-            android:layout_marginBottom="11dp"
+            android:layout_below="@+id/tv_movie_VoteAverage"
+            android:layout_marginTop="11dp"
             android:background="@color/colorPink" />
+
+        <TextView
+            android:id="@+id/tv_movie_review_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_selected_movie_image"
+
+            android:layout_centerHorizontal="true"
+            android:text="@string/action_review"
+            android:textStyle="bold|italic" />
 
 
     </RelativeLayout>

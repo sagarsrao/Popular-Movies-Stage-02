@@ -1,7 +1,9 @@
 package com.udacity.popmovies.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +25,9 @@ import com.udacity.popmovies.BuildConfig;
 import com.udacity.popmovies.R;
 import com.udacity.popmovies.adapters.TrailerAdapter;
 import com.udacity.popmovies.constants.MovieConstants;
+import com.udacity.popmovies.database.MovieContract;
 import com.udacity.popmovies.database.MovieDbHelper;
+import com.udacity.popmovies.database.MovieProvider;
 import com.udacity.popmovies.models.FavoriteToggleStatus;
 import com.udacity.popmovies.models.TrailerResponse;
 import com.udacity.popmovies.models.Trailers;
@@ -31,6 +35,8 @@ import com.udacity.popmovies.networking.RetrofitApiEndPoints;
 import com.udacity.popmovies.networking.RetrofitClient;
 import com.udacity.popmovies.stetho.MyApplication;
 
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +60,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView mReleaseDate;
 
     ImageView mPosterImage;
+
+    TextView mMovieReviewLink;
 
     TextView mOverView;
 
@@ -100,32 +108,47 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mToggleButton = (ToggleButton) findViewById(R.id.toggleMovie);
         mToggleButton.setTextOff(textOff);
         movieDbHelper = new MovieDbHelper(MovieDetailsActivity.this);
+        mMovieReviewLink = (TextView) findViewById(R.id.tv_movie_review_link);
+
+
+        mMovieReviewLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(MovieDetailsActivity.this, MovieReviewActivity.class);
+                Bundle bundle = new Bundle();
+                String movieId = getIntent().getExtras().getString(MovieConstants.MOVIE_ID);
+                bundle.putString(MovieConstants.MOVIE_ID, movieId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                // startActivity(new Intent(MovieDetailsActivity.this, MovieReviewActivity.class));
+            }
+        });
 
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     mToggleButton.setTextOn(textOn);
-                    boolean marked = isChecked;
-                    String movieName = getIntent().getExtras().getString(MovieConstants.MOVIE_TITLE);
-                    long id = movieDbHelper.addToggleData(new FavoriteToggleStatus(movieName, marked, !isChecked));
+                    /*Get the random movietitle  and movie ID*/
+                    String movieTitle = getIntent().getExtras().getString(MovieConstants.MOVIE_TITLE);
+                    String movieId = getIntent().getExtras().getString(MovieConstants.MOVIE_ID);
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(MovieConstants.MOVIE_TITLE, movieTitle);
+                    contentValues.put(MovieConstants.MOVIE_ID, movieId);
 
-                    if (id > 0) {
+                    Uri uri = getContentResolver()
+                            .insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
 
-                        Toast.makeText(MovieDetailsActivity.this, "Movie Marked Saved SuccessFully", Toast.LENGTH_SHORT).show();
-                    }
+
+                    Toast.makeText(MovieDetailsActivity.this, uri.toString(), Toast.LENGTH_SHORT).show();
 
 
                 } else {
                     mToggleButton.setTextOff(textOff);
-                    String movieName = getIntent().getExtras().getString(MovieConstants.MOVIE_TITLE);
-                    boolean marked = !isChecked;
-                    long id = movieDbHelper.addToggleData(new FavoriteToggleStatus(movieName, marked, isChecked));
 
-                    if (id > 0) {
-
-                        Toast.makeText(MovieDetailsActivity.this, "Movie Marked UnSaved SuccessFully", Toast.LENGTH_SHORT).show();
-                    }
                 }
 
 

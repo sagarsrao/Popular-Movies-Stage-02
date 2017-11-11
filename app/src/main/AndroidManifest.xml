@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.udacity.popmovies">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -24,10 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.MovieDetailsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- Defining all the content provider details -->
+        <provider
+            android:name=".database.MovieProvider"
+            android:authorities="@string/app_content_authority"
+            android:exported="false"
+            android:syncable="true" />
+
+        <activity android:name=".activities.MovieReviewActivity"></activity>
     </application>
 
 </manifest>

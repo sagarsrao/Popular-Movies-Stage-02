@@ -36,7 +36,7 @@ public class Movie implements Parcelable {
     private String release_date;
 
 
-    List<Movie> movieList = new ArrayList<Movie>();
+    private List<Movie> movieList = new ArrayList<Movie>();
 
 
     public Movie() {

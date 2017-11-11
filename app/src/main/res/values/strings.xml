@@ -4,7 +4,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_mostPopular">Most Popular</string>
     <string name="action_topRated">Top Rated</string>
-    <string name ="action_movies_loading">Loading</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="action_movies_loading">Loading</string>
     <string name="text_movie_title">Title</string>
     <string name="text_movie_release_date">ReleaseDate</string>
     <string name="text_movie_vote_average">VoteAverage</string>
@@ -15,4 +16,6 @@
     <string name="toast_loading_the_data">Sorry!Loading Data Failure!!</string>
     <string name="toast_results_load_failure">Sorry!There was a problem in loading the Data</string>
     <string name="toast_no_internet_connection">Sorry!Internet Connection Not available or No Network!!!</string>
+    <string name="action_review">Look at the review</string>
+    <string name="app_content_authority">com.udacity.popmovies</string>
 </resources>

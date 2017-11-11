@@ -1,44 +1,38 @@
 package com.udacity.popmovies.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by sagarsrao on 05-11-2017.
  */
 
 public class FavoriteToggleStatus {
 
-    Boolean marked;
 
-    Boolean UnMarked;
+    @SerializedName("id")
+    private String id;
 
-    String movieName;
+    @SerializedName("title")
+    private String title;
 
-    public String getMovieName() {
-        return movieName;
+    public FavoriteToggleStatus(String id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public String getId() {
+        return id;
     }
 
-    public FavoriteToggleStatus(String movieName, Boolean marked, Boolean unMarked) {
-        this.movieName = movieName;
-        this.marked = marked;
-        this.UnMarked = unMarked;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Boolean getMarked() {
-        return marked;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMarked(Boolean marked) {
-        this.marked = marked;
-    }
-
-    public Boolean getUnMarked() {
-        return UnMarked;
-    }
-
-    public void setUnMarked(Boolean unMarked) {
-        UnMarked = unMarked;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
