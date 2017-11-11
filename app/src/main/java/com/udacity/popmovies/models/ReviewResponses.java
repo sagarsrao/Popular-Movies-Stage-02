@@ -2,11 +2,10 @@ package com.udacity.popmovies.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by bineesh on 8/11/17.
+ * Created by Sagar on 8/11/17.
  */
 
 public class ReviewResponses {

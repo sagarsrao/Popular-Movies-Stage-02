@@ -1,12 +1,10 @@
 package com.udacity.popmovies.database;
 
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.udacity.popmovies.models.FavoriteToggleStatus;
 
 /**
  * Created by sagarsrao on 05-11-2017.
@@ -15,7 +13,7 @@ import com.udacity.popmovies.models.FavoriteToggleStatus;
 public class MovieDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "movie.db";
 
 

@@ -25,24 +25,6 @@ public class RetrofitClient {
 
 
         if (retrofit == null) {
-        /*The below code can be used to trace the log for network requests*/
-           /* OkHttpClient okClient = new OkHttpClient.Builder()
-                    .addInterceptor(
-                            new Interceptor() {
-                                @Override
-                                public Response intercept(Interceptor.Chain chain) throws IOException {
-                                    Request original = chain.request();
-
-                                    // Request customization: add request headers
-                                    Request.Builder requestBuilder = original.newBuilder()
-                                            .method(original.method(), original.body());
-
-                                    Request request = requestBuilder.build();
-                                    return chain.proceed(request);
-                                }
-                            })
-                    .build();
-        */
 
             OkHttpClient okClient = new OkHttpClient.Builder()
                     .addNetworkInterceptor(new StethoInterceptor())

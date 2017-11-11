@@ -2,31 +2,24 @@ package com.udacity.popmovies.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.udacity.popmovies.BuildConfig;
 import com.udacity.popmovies.R;
-import com.udacity.popmovies.adapters.MovieAdapter;
 import com.udacity.popmovies.adapters.MovieReviewAdapter;
 import com.udacity.popmovies.constants.MovieConstants;
 import com.udacity.popmovies.models.Movie;
-import com.udacity.popmovies.models.ResponseMovie;
 import com.udacity.popmovies.models.ReviewResponses;
 import com.udacity.popmovies.models.Reviews;
-import com.udacity.popmovies.models.TrailerResponse;
 import com.udacity.popmovies.networking.RetrofitApiEndPoints;
 import com.udacity.popmovies.networking.RetrofitClient;
-import com.udacity.popmovies.stetho.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,14 +93,5 @@ public class MovieReviewActivity extends AppCompatActivity {
 
     }
 
-    private int numberOfColumns() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        // You can change this divider to adjust the size of the poster
-        int widthDivider = 500;
-        int width = displayMetrics.widthPixels;
-        int nColumns = width / widthDivider;
-        if (nColumns < 2) return 2;
-        return nColumns;
-    }
+
 }

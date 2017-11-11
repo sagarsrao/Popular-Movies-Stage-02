@@ -11,15 +11,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * Created by bineesh on 6/11/17.
+ * Created by sagar on 6/11/17.
  */
 
 public class MovieProvider extends ContentProvider {
 
-    private static final String LOG_TAG = MovieProvider.class.getSimpleName();
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MovieDbHelper mhelper;
-
 
 
     /*codes for the URI  matcher*/

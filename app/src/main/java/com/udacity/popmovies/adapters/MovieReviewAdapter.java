@@ -4,23 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.udacity.popmovies.R;
-import com.udacity.popmovies.constants.MovieConstants;
-import com.udacity.popmovies.models.Movie;
+
 import com.udacity.popmovies.models.Reviews;
 
 import java.util.List;
 
 /**
- * Created by bineesh on 8/11/17.
+ * Created by sagar on 8/11/17.
  */
 
 public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.ReviewHolder> {
@@ -68,7 +65,6 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
 
         public ReviewHolder(View itemView) {
             super(itemView);
-            //mPosterImage = (ImageView) itemView.findViewById(R.id.review_image_view);
             mUrl = (TextView) itemView.findViewById(R.id.info_text);
 
 

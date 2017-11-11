@@ -27,16 +27,13 @@ import com.udacity.popmovies.adapters.TrailerAdapter;
 import com.udacity.popmovies.constants.MovieConstants;
 import com.udacity.popmovies.database.MovieContract;
 import com.udacity.popmovies.database.MovieDbHelper;
-import com.udacity.popmovies.database.MovieProvider;
-import com.udacity.popmovies.models.FavoriteToggleStatus;
+
 import com.udacity.popmovies.models.TrailerResponse;
 import com.udacity.popmovies.models.Trailers;
 import com.udacity.popmovies.networking.RetrofitApiEndPoints;
 import com.udacity.popmovies.networking.RetrofitClient;
 import com.udacity.popmovies.stetho.MyApplication;
 
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

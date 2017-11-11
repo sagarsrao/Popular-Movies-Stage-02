@@ -1,7 +1,9 @@
 package com.udacity.popmovies.activities;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +16,10 @@ import android.widget.Toast;
 
 import com.udacity.popmovies.BuildConfig;
 import com.udacity.popmovies.R;
+import com.udacity.popmovies.adapters.FavoriteMovieAdapter;
 import com.udacity.popmovies.adapters.MovieAdapter;
 import com.udacity.popmovies.adapters.OnItemClickListener;
-import com.udacity.popmovies.constants.MovieConstants;
+import com.udacity.popmovies.database.MovieContract;
 import com.udacity.popmovies.models.Movie;
 import com.udacity.popmovies.models.ResponseMovie;
 import com.udacity.popmovies.networking.RetrofitApiEndPoints;
@@ -44,11 +47,17 @@ public class MovieActivity extends AppCompatActivity {
 
     MovieAdapter mAdapter;
 
+    FavoriteMovieAdapter mFavoriteMovieAdapter;
+
     RecyclerView.LayoutManager mLayoutManager;
 
     List<Movie> movie;
 
+    List<String> favoriteMovieList;
+
     OnItemClickListener clickListener;
+
+    Cursor mCursor;
 
 
     @Override
@@ -60,6 +69,7 @@ public class MovieActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_movies);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         movie = new ArrayList<>();
+        favoriteMovieList = new ArrayList<>();
 
     }
 
@@ -154,9 +164,25 @@ public class MovieActivity extends AppCompatActivity {
         }
         if (id == R.id.action_favorite) {
             Toast.makeText(this, "You clicked on favorite option!!!!!!!!", Toast.LENGTH_SHORT).show();
-            /*Todo 1 : Query the content provider for the movie id */
-            /*Todo 2 : Pass the movie id to the Favorites adapter*/
-            /*Todo 3 : Show the GridView collection of images for the favorite images opted  by the user*/
+
+
+            mCursor = getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, null, null, null);
+            if (null != mCursor) {
+                mCursor.moveToFirst();
+                while (mCursor.moveToNext()) {
+                    favoriteMovieList.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_TITLE)));
+                }
+                mCursor.close();
+                mLayoutManager = new LinearLayoutManager(MovieActivity.this, LinearLayoutManager.VERTICAL, true);
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mFavoriteMovieAdapter = new FavoriteMovieAdapter(MovieActivity.this, favoriteMovieList);
+
+                mRecyclerView.setAdapter(mFavoriteMovieAdapter);
+                mFavoriteMovieAdapter.notifyDataSetChanged();
+            }
+
+
         }
 
 

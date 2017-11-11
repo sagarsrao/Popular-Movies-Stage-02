@@ -18,4 +18,5 @@
     <string name="toast_no_internet_connection">Sorry!Internet Connection Not available or No Network!!!</string>
     <string name="action_review">Look at the review</string>
     <string name="app_content_authority">com.udacity.popmovies</string>
+    <string name="text_favorite_movies_stored_selected">Favorite Movies Selected</string>
 </resources>
