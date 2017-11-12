@@ -5,10 +5,14 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.udacity.popmovies.constants.MovieConstants;
 
 /**
  * Created by sagar on 6/11/17.
@@ -108,6 +112,8 @@ public class MovieProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE: {
                 long _id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, contentValues);
+
+                //insertOrUpdateById(db, MovieContract.MovieEntry.CONTENT_URI, MovieContract.MovieEntry.TABLE_NAME, contentValues, MovieConstants.MOVIE_ID);
                 // insert unless it is already contained in the database
                 /*If the record is added successfully then we notify the content provider*/
                 if (_id > 0) {
@@ -116,6 +122,8 @@ public class MovieProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into: " + uri);
                 }
                 break;
+                /*getContext().getContentResolver().notifyChange(uri, null, false);
+                return MovieContract.MovieEntry.buildMoviesUri(Long.parseLong(contentValues.getAsString(MovieContract.MovieEntry._ID)));*/
             }
 
             default: {
@@ -125,6 +133,19 @@ public class MovieProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
+    }
+
+
+    private void insertOrUpdateById(SQLiteDatabase db, Uri uri, String table,
+                                    ContentValues values, String column) throws SQLException {
+        try {
+            db.insertOrThrow(table, null, values);
+        } catch (SQLiteConstraintException e) {
+            int nrRows = update(uri, values, column + "=?",
+                    new String[]{values.getAsString(column)});
+            if (nrRows == 0)
+                throw e;
+        }
     }
 
     /*The below helper methods will be helpful in deleting and updating the data to and from the contentProvider*/

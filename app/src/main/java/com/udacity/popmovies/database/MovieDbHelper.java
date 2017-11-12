@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MovieDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 11;
     public static final String DATABASE_NAME = "movie.db";
 
 
@@ -22,8 +22,10 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                     MovieContract.MovieEntry._ID + " TEXT," +
                     MovieContract.MovieEntry.MOVIE_TITLE + " TEXT)";
 
+    /*Changing from ALTER TO DROP SINCE DROP WILL WIPE YOU ALL THE DATABASE RECORDS AND THIS IS NOT GOOD DURING THE
+    * DATABASE UPGRADE*/
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + MovieContract.MovieEntry.TABLE_NAME;
+            "ALTER TABLE IF EXISTS " + MovieContract.MovieEntry.TABLE_NAME;
 
 
     public MovieDbHelper(Context context) {

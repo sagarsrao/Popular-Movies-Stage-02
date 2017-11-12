@@ -88,7 +88,10 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         Intent webIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(MovieConstants.YOUTUBE_MOVIE_URL + id));
         try {
-            context.startActivity(appIntent);
+            //verify that the intent will resolve to an activity
+            if (appIntent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(appIntent);
+            }
         } catch (ActivityNotFoundException ex) {
             context.startActivity(webIntent);
         }
