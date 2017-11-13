@@ -166,9 +166,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(MovieConstants.MOVIE_TITLE, movieTitle);
                     contentValues.put(MovieConstants.MOVIE_ID, movieId);
-                    MovieProvider movieProvider = new MovieProvider();
+                   // MovieProvider movieProvider = new MovieProvider();
                     //Uri uri =  movieProvider.insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
-                    Uri uri = getApplicationContext().getContentResolver()
+                    Uri uri = getContentResolver()
                             .insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
 
 

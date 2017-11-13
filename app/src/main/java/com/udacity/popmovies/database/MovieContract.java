@@ -41,8 +41,8 @@ public final class MovieContract {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
 
         // for building URIs on insertion
-        public static Uri buildMoviesUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
+        public static Uri buildMoviesUri(String  id) {
+            return ContentUris.withAppendedId(CONTENT_URI, Long.parseLong(id));
         }
 
 

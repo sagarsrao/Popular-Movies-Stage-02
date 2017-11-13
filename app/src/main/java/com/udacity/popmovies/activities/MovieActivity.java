@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -51,6 +52,8 @@ public class MovieActivity extends AppCompatActivity {
 
     RecyclerView.LayoutManager mLayoutManager;
 
+    private StaggeredGridLayoutManager gaggeredGridLayoutManager;
+
     List<Movie> movie;
 
     List<String> favoriteMovieList;
@@ -67,7 +70,7 @@ public class MovieActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_movies);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         movie = new ArrayList<>();
         favoriteMovieList = new ArrayList<>();
 
@@ -106,8 +109,9 @@ public class MovieActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + statusCode);
                         List<Movie> movies = response.body().getResults();
 
-                        mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
-                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        //mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
+                        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), LinearLayoutManager.VERTICAL);
+                        mRecyclerView.setLayoutManager(gaggeredGridLayoutManager);
                         mAdapter = new MovieAdapter(MyApplication.getAppContext(), movies, clickListener);
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
@@ -142,8 +146,10 @@ public class MovieActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + statusCode);
                         List<Movie> movies = response.body().getResults();
 
-                        mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
-                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        //mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
+                        //mRecyclerView.setLayoutManager(mLayoutManager);
+                        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), LinearLayoutManager.VERTICAL);
+                        mRecyclerView.setLayoutManager(gaggeredGridLayoutManager);
                         mAdapter = new MovieAdapter(MyApplication.getAppContext(), movies, clickListener);
                         mRecyclerView.setAdapter(mAdapter);
                         /*This will help us in refreshing the whole adapter*/
@@ -173,9 +179,11 @@ public class MovieActivity extends AppCompatActivity {
                     favoriteMovieList.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_TITLE)));
                 }
                 mCursor.close();
-                mLayoutManager = new LinearLayoutManager(MovieActivity.this, LinearLayoutManager.VERTICAL, true);
-                mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-                mRecyclerView.setLayoutManager(mLayoutManager);
+                //mLayoutManager = new LinearLayoutManager(MovieActivity.this, LinearLayoutManager.VERTICAL, true);
+                //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+                gaggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), LinearLayoutManager.VERTICAL);
+                mRecyclerView.setLayoutManager(gaggeredGridLayoutManager);
+                //mRecyclerView.setLayoutManager(mLayoutManager);
                 mFavoriteMovieAdapter = new FavoriteMovieAdapter(MovieActivity.this, favoriteMovieList);
 
                 mRecyclerView.setAdapter(mFavoriteMovieAdapter);
@@ -218,8 +226,10 @@ public class MovieActivity extends AppCompatActivity {
                     int statusCode = response.code();
                     Log.d(TAG, "onResponse: " + statusCode);
                     List<Movie> movies = response.body().getResults();
-                    mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
-                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    gaggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), LinearLayoutManager.VERTICAL);
+                    mRecyclerView.setLayoutManager(gaggeredGridLayoutManager);
+                    // mLayoutManager = new GridLayoutManager(MovieActivity.this, numberOfColumns());
+                    // mRecyclerView.setLayoutManager(mLayoutManager);
                     mAdapter = new MovieAdapter(MyApplication.getAppContext(), movies, clickListener);
                     mRecyclerView.setAdapter(mAdapter);
 
