@@ -26,8 +26,9 @@ public final class MovieContract {
     /* Inner class that defines the table contents */
     public static class MovieEntry implements BaseColumns {
         public static final String TABLE_NAME = "movie";
-        public static final String _ID = MovieConstants.MOVIE_ID;
-        public static final String MOVIE_TITLE = MovieConstants.MOVIE_TITLE;
+        public static final String _ID = MovieConstants.MOVIE_ID; //movieId
+        public static final String MOVIE_TITLE = MovieConstants.MOVIE_TITLE; //movieTitle
+        public static final String MOVIE_IMAGE = MovieConstants.MOVIE_POSTER_VIEWS; //movieImage
 
         /*create a content URI*/
         // create content uri
@@ -41,7 +42,7 @@ public final class MovieContract {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
 
         // for building URIs on insertion
-        public static Uri buildMoviesUri(String  id) {
+        public static Uri buildMoviesUri(String id) {
             return ContentUris.withAppendedId(CONTENT_URI, Long.parseLong(id));
         }
 

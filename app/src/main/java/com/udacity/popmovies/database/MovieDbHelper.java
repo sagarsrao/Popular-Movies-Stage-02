@@ -13,13 +13,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MovieDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 14;
+    public static final int DATABASE_VERSION = 17;
     public static final String DATABASE_NAME = "movie.db";
 
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + MovieContract.MovieEntry.TABLE_NAME + " (" +
                     MovieContract.MovieEntry._ID + " UNIQUE ON CONFLICT REPLACE," +
+                    MovieContract.MovieEntry.MOVIE_IMAGE + " TEXT," +
                     MovieContract.MovieEntry.MOVIE_TITLE + " TEXT)";
 
 

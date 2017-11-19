@@ -8,31 +8,19 @@ import com.google.gson.annotations.SerializedName;
 
 public class FavoriteToggleStatus {
 
-
-    @SerializedName("id")
-    private String id;
-
-    @SerializedName("title")
-    private String title;
-
-    public FavoriteToggleStatus(String id, String title) {
-        this.id = id;
-        this.title = title;
+    public FavoriteToggleStatus(String poster_path) {
+        this.poster_path = poster_path;
     }
 
-    public String getId() {
-        return id;
+    @SerializedName("poster_path")
+    private String poster_path;
+
+
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 }

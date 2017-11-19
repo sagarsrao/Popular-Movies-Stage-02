@@ -21,6 +21,7 @@ public class MovieConstants {
     public static final String MOVIE_OVERVIEW = "movie_overView";
     public static final String MOVIE_VOTE_AVERAGE = "movie_vote_average";
     public static final String MOVIE_POSTER_VIEWS = "movie_poster_paths";
+    public static final String DB_MOVIE_IMAGE = "movie_image";
 
 
     public static final String YOUTUBE_MOVIE_URL = "https://www.youtube.com/watch?v=";

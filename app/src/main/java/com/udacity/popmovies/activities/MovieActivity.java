@@ -3,8 +3,6 @@ package com.udacity.popmovies.activities;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -21,7 +19,9 @@ import com.udacity.popmovies.adapters.FavoriteMovieAdapter;
 import com.udacity.popmovies.adapters.MovieAdapter;
 import com.udacity.popmovies.adapters.OnItemClickListener;
 import com.udacity.popmovies.database.MovieContract;
+import com.udacity.popmovies.models.FavoriteToggleStatus;
 import com.udacity.popmovies.models.Movie;
+import com.udacity.popmovies.models.ResponseFavoriteMovie;
 import com.udacity.popmovies.models.ResponseMovie;
 import com.udacity.popmovies.networking.RetrofitApiEndPoints;
 import com.udacity.popmovies.networking.RetrofitClient;
@@ -56,12 +56,25 @@ public class MovieActivity extends AppCompatActivity {
 
     List<Movie> movie;
 
+    List<String> favoriteMoviesListFromTheContentProvider;
+
+    List<ResponseFavoriteMovie> responseFavoriteMovieList;
+
+
+
+    private byte[] favoriteMoviePath;
+
+    private List<String> updateFavoritedMoviesPath = null;
+
     List<String> favoriteMovieList;
+
+    List<String> favoriteToggleStatuses;
 
     OnItemClickListener clickListener;
 
     Cursor mCursor;
 
+    ResponseFavoriteMovie responseFavoriteMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +86,10 @@ public class MovieActivity extends AppCompatActivity {
         // mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         movie = new ArrayList<>();
         favoriteMovieList = new ArrayList<>();
-
+        favoriteMoviesListFromTheContentProvider = new ArrayList<String>();
+        updateFavoritedMoviesPath = new ArrayList<>();
+        responseFavoriteMovieList = new ArrayList<>();
+        favoriteToggleStatuses = new ArrayList<>();
     }
 
     @Override
@@ -173,18 +189,40 @@ public class MovieActivity extends AppCompatActivity {
 
 
             mCursor = getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, null, null, null);
-            if (null != mCursor) {
+            if (null != mCursor && mCursor.getCount() > 0) {
                 mCursor.moveToFirst();
-                while (mCursor.moveToNext()) {
-                    favoriteMovieList.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_TITLE)));
+                if (mCursor.moveToFirst()) {
+                    do {
+
+                        favoriteMovieList.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_TITLE)));
+
+                        String favoriteMovies = mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_IMAGE));
+
+                        favoriteToggleStatuses.add(favoriteMovies);
+
+                       // updateFavoritedMoviesPath.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_IMAGE)));
+
+                    } while (mCursor.moveToNext());
+                    mCursor.close();
+
                 }
-                mCursor.close();
+
+                /*while (mCursor.moveToNext()) {
+                    favoriteMovieList.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_TITLE)));
+                    //favoriteMoviesListFromTheContentProvider.add(mCursor.getString(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_IMAGE)));
+                    //movie.add(mCursor.getColumnIndexOrThrow(MovieContract.MovieEntry.MOVIE_IMAGE));
+                    favoriteMoviePath = mCursor.getBlob(2);
+                    updateFavoritedMoviesPath.add(favoriteMoviePath);
+                    //updateFavoritedMoviesPath.add(favoriteMoviePath.g);
+
+                }*/
                 //mLayoutManager = new LinearLayoutManager(MovieActivity.this, LinearLayoutManager.VERTICAL, true);
                 //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
                 gaggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), LinearLayoutManager.VERTICAL);
                 mRecyclerView.setLayoutManager(gaggeredGridLayoutManager);
                 //mRecyclerView.setLayoutManager(mLayoutManager);
-                mFavoriteMovieAdapter = new FavoriteMovieAdapter(MovieActivity.this, favoriteMovieList);
+
+                mFavoriteMovieAdapter = new FavoriteMovieAdapter(MovieActivity.this, favoriteMovieList, favoriteToggleStatuses);//favoriteMoviesListFromTheContentProvider
 
                 mRecyclerView.setAdapter(mFavoriteMovieAdapter);
                 mFavoriteMovieAdapter.notifyDataSetChanged();

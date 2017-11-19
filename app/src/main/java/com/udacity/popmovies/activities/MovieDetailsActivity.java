@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.udacity.popmovies.BuildConfig;
 import com.udacity.popmovies.R;
 import com.udacity.popmovies.adapters.TrailerAdapter;
+import com.udacity.popmovies.constants.DbBitmapUtility;
 import com.udacity.popmovies.constants.MovieConstants;
 import com.udacity.popmovies.database.MovieContract;
 import com.udacity.popmovies.database.MovieDbHelper;
@@ -99,6 +100,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private String movieTitle;
     private String movieId;
+    private String movieImage;
+    private String moviePosterPath;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -133,6 +137,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mMovieReviewLink = (TextView) findViewById(R.id.tv_movie_review_link);
         movieTitle = getIntent().getExtras().getString(MovieConstants.MOVIE_TITLE);
         movieId = getIntent().getExtras().getString(MovieConstants.MOVIE_ID);
+        movieImage = getIntent().getExtras().getString(MovieConstants.MOVIE_POSTER_VIEWS); //you are simply taking it from the bundle
+        moviePosterPath = MovieConstants.MOVIE_IMAGE_URL + getIntent().getExtras().getString(MovieConstants.MOVIE_POSTER_VIEWS);
 
         mMovieReviewLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,11 +168,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     mToggleButton.setTextOn(textOn);
                     //TODO : You could use getContentresolver.query() to check if a movie is already favorited and in this case display a message or better implement un-favorite functionality
 
-
+                    //I am passing a path of
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(MovieConstants.MOVIE_TITLE, movieTitle);
+                    contentValues.put(MovieConstants.MOVIE_POSTER_VIEWS, moviePosterPath);
                     contentValues.put(MovieConstants.MOVIE_ID, movieId);
-                   // MovieProvider movieProvider = new MovieProvider();
+                    // MovieProvider movieProvider = new MovieProvider();
                     //Uri uri =  movieProvider.insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
                     Uri uri = getContentResolver()
                             .insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
@@ -191,7 +198,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
 
-        String moviePosterPath = MovieConstants.MOVIE_IMAGE_URL + getIntent().getExtras().getString(MovieConstants.MOVIE_POSTER_VIEWS);
+        moviePosterPath = MovieConstants.MOVIE_IMAGE_URL + getIntent().getExtras().getString(MovieConstants.MOVIE_POSTER_VIEWS);
         Glide.with(MovieDetailsActivity.this)
                 .load(moviePosterPath)
                 .placeholder(R.drawable.iv_placeholder__moviedetails)
